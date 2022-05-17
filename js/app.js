@@ -1,33 +1,34 @@
-import {initLayout, createRejilla} from './layout.js';
+import { createRejilla, colors as colorPixel } from './layout.js';
+import { mouseMovement } from './events.js';
 
 //define globals variables
-var sizeP,
-    canvas,
-    div, 
-    ctx;
+var sizeP,      //Tamaño de un pixel: {x:, y:}
+    div,        //Div que contiene el canvas.
+    canvas,     //Objeto html del Canvas.
+    ctx;        //Contexto del canvas.
 //------------------------
 
 window.onload = () => {
-    sizeP = {
-        x: 30,
-        y: 30
-    };
+    sizeP = { x: 50, y: 50 };
     
     div = document.getElementById('game');
     canvas = document.getElementById('canvas-game');
     ctx = canvas.getContext('2d');
 
-    //createRejilla(canvas, sizeP);
-    resize(15,10);
+    resizeScreen( 10, 8 );
+
+    canvas.addEventListener('mousemove', (ev) => {
+        resizeScreen( 10, 8 );
+        mouseMovement(ctx, sizeP, colorPixel.hover, ev);
+    });
 }
 
 
 //------------ functions
-
-const resize = (nX, nY) => {
+const resizeScreen = (cols, rows) => {
     const [width, height] = [
-        sizeP.x * nX,
-        sizeP.y * nY
+        sizeP.x * cols,
+        sizeP.y * rows
     ];
 
     div.style.height = height+'px';
@@ -38,4 +39,6 @@ const resize = (nX, nY) => {
 
     createRejilla(canvas, sizeP);
 }
+
+
 //--------------------------------;

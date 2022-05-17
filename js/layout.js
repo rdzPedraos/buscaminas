@@ -1,8 +1,8 @@
-export function initLayout(ctx){
-}
-
-
-
+export const colors = {
+    0: '#aad751', 
+    1: '#a2d149', 
+    hover: '#bfe07d'
+}; 
 
 
 /**
@@ -13,7 +13,6 @@ export function initLayout(ctx){
 export function createRejilla(cv, szPixel){
     const 
         ctx = cv.getContext('2d'),
-        colors = ['#a2d149', '#aad751'],
         nCols = Math.floor(cv.width / szPixel.x),
         nRows = Math.floor(cv.height / szPixel.y);
     let color;
@@ -24,6 +23,7 @@ export function createRejilla(cv, szPixel){
 
         for(let col=0; col < nCols; col++ ){
             color = color == colors[0] ? colors[1] : colors[0];
+
             ctx.fillStyle = color;
             ctx.fillRect(col*szPixel.x, row*szPixel.y, szPixel.x, szPixel.y);
         }
