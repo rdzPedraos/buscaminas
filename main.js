@@ -1,5 +1,5 @@
 window.onload = () => {
-    const canv = document.getElementById('buscaminas');
+    const canv = document.getElementById('canvas-game');
     if( canv.getContext ){
         createRejilla(canv);
 
@@ -7,7 +7,7 @@ window.onload = () => {
         /*createCanvas( ctx );
         createTriangle( ctx )
         createHappyFace( ctx ); */
-        createCircles(ctx);
+        /*createCircles(ctx);*/
     }
 };
 
@@ -36,6 +36,7 @@ function createHappyFace(ctx){
     ctx.arc(50,160, 30, 0, Math.PI);
 
     ctx.stroke();
+    ctx.closePath();
 }
 
 
@@ -57,22 +58,7 @@ function createTriangle(ctx){
 }
 
 
-function createRejilla(canvas){
-    const tamPixel = 10,
-        sizeW = canvas.width,
-        sizeH = canvas.height,
-        ctx = canvas.getContext('2d');
-    let color = 'dfdfdf';
-    
-    for(let i=0; i < sizeW; i += tamPixel){
-        for(let j=0; j < sizeH; j += tamPixel){
-            color = color == 'dfdfdf' ? 'efeaea' : 'dfdfdf'
-            
-            ctx.fillStyle = '#'+color;
-            ctx.fillRect(j,i,tamPixel,tamPixel);
-        }
-    }
-}
+
 
 
 function createCircles(ctx){

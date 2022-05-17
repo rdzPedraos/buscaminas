@@ -1,0 +1,27 @@
+main{
+    min-height: calc(100vh - 5em);
+    width: 100vw;
+    background-color: rgb(32, 33, 36);
+    padding-top: 5em;
+}
+
+#game{
+    margin: 0 auto;
+    width: 500px;
+
+    .header{
+        height: 4em;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 3em;
+        
+        background-color: rgb(74, 117, 44);
+    }
+
+    #canvas-game{
+        background-color: white;
+        margin:auto
+    }
+
+}

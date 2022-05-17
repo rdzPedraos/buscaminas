@@ -6,26 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscaminas</title>
 
-    <style>
-        main{
-            width: 100%;
-            margin-top: 50px;
-        }
-        #buscaminas{
-            border: 1px solid orange;
-            display: block;
-            margin: auto;
-            padding: 1em;
-            border-radius: .3em;
-        }
-    </style>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
     <main>
-        <canvas id="buscaminas" width=501 height=501></canvas>
+        <section id="game">
+            <div class="header">
+                <button>Difficult</button>
+
+                <div>
+                    <span>@</span>
+                    <span>Timer</span>
+                </div>
+
+                <span>x</span>
+            </div>
+            
+            <canvas id="canvas-game" width="500" height="400"></canvas>
+        </section>
     </main>
 
-
-    <script src="js/main.js"></script>
+    <script src="js/app.js" type="module"></script>
 </body>
 </html>
