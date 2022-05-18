@@ -1,9 +1,9 @@
 export const colors = {
-    default_pixels: ['#cccccc', '#fff'],
+    default_pixels: ['#ccc', '#eee'],
     
     noOpen: '#aaee33bb',
     open: '#ffc395e0', //ddc395e0
-    hover: '#fff5',
+    hover: '#fff4',
 
     text: ['', '#5555ff', '#558855', 'red', 'brown', 'purple'],
     bombs: ['#db3236', '#008744', '#f4840d', '#ed44b5', '#48e6f1', '#f4c20d', '#b648f2', '#4885ed']
@@ -72,11 +72,7 @@ export function setColorsByMatriz(ctx, szPixel, matriz){
 
                         const img = new Image();
                         img.src = 'img/circle_alpha.png';
-                        ctx.drawImage(img, col*x + 7, row*y + 7, x-14, y-14);
-
-                        /*ctx.arc(col*x + x/2, row*y + y/2, x - (x*.75), 0, Math.PI*2)
-                        ctx.fill();
-                        ctx.closePath();*/
+                        ctx.drawImage(img, col*x + y/4, row*y + y/4, x/2, y/2);
                     }
                 break;
 

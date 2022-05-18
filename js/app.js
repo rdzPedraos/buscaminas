@@ -13,7 +13,7 @@ var sizeP,      //Tamaño de un pixel: {x:, y:}
 
 window.onload = () => {
     const nPixels = { cols: 10, rows: 8};
-    sizeP = { x: 60, y: 60 };
+    sizeP = { x: 50, y: 50 };
     
     div = document.getElementById('game');
     canvas = document.getElementById('canvas-game');
@@ -24,6 +24,7 @@ window.onload = () => {
     setInterfaz(ctx, sizeP, dataMatriz);
     
     setBombs(dataMatriz, 10, {x:2, y:1});
+    searchFields(dataMatriz, {x:1, y:1});
 
     canvas.addEventListener('mousemove', (ev) => {
         setInterfaz(ctx, sizeP, dataMatriz);
@@ -60,6 +61,39 @@ const defineMatriz = (cols, rows) => {
     }
 
     return matriz;
+}
+
+const searchFields = (matriz, point) => {
+    const {x,y} = point;
+    const [minX, maxX, minY, maxY] = [
+        x > 0 ? x-1 : 0,
+        x >= matriz[0].length ? matriz[0].length : x+1,
+        y > 0 ? y-1 : 0,
+        y >= matriz.length ? matriz.length : y+1,
+    ];
+
+    console.log(point, minX, maxX, minY, maxY);
+    if( matriz[y,x] != 'b' ){
+        let bombs = 0;
+
+        //busque cuantas bombas hay al su alrededor.
+        for(let i = minY; i <= maxY; i++){
+            for(let j = minX; j <= maxX; j++){
+                if( matriz[i][j] == 'b' ) bombs++;
+            }
+        }
+
+        matriz[y,x] = bombs;
+        if(bombs == 0) {
+            for(let i = minY; i <= maxY; i++){
+                for(let j = minX; j <= maxX; j++){
+                    if( !(i==y && j==x) && matriz[i,j] == null){
+                        searchFields(matriz, {x:j, y:i});
+                    }
+                }
+            }
+        }
+    }
 }
 
 
