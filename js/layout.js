@@ -36,6 +36,7 @@ export function createRejilla(ctx, szPixel){
     }
 }
 
+
 /**
  * Imprime en el canvas una rejilla que contiene una cuadricula con las dimensiones dadas.
  * @param {HTMLObjectElement} ctx Objeto canvas referido al html.
@@ -104,4 +105,25 @@ export function setColorsByMatriz(ctx, szPixel, matriz){
             afterActions();
         }
     }
+}
+
+
+export function eventHover(ctx, sizePixel, event){
+    //Size pixel:
+    const [sizeX, sizeY] = [sizePixel.x, sizePixel.y];
+
+    //Position windows to canvas:
+    const pos = {
+        x: event.clientX - ctx.canvas.offsetLeft,
+        y: event.clientY - ctx.canvas.offsetTop
+    }
+
+    //Position in pixel:
+    const
+        mousePosX = Math.floor( pos.x / sizeX),
+        mousePosY = Math.floor( pos.y / sizeY);
+
+    //Set in the position the color:
+    ctx.fillStyle = colors.hover;
+    ctx.fillRect(mousePosX * sizeX, mousePosY * sizeY, sizeX, sizeY);    
 }

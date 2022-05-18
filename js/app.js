@@ -1,5 +1,5 @@
-import { setInterfaz, colors as colorPixel } from './layout.js';
-import { mouseMovement } from './events.js';
+import { setInterfaz, eventHover } from './layout.js';
+import {  } from './events.js';
 
 //define globals variables
 var sizeP,      //Tamaño de un pixel: {x:, y:}
@@ -12,24 +12,26 @@ var sizeP,      //Tamaño de un pixel: {x:, y:}
 //------------------------
 
 window.onload = () => {
-    const nPixels = { cols: 20, rows: 18};
-    sizeP = { x: 40, y: 40 };
+    const nPixels = { cols: 10, rows: 8};
+    sizeP = { x: 60, y: 60 };
     
     div = document.getElementById('game');
     canvas = document.getElementById('canvas-game');
     ctx = canvas.getContext('2d');
     dataMatriz = defineMatriz(nPixels.cols, nPixels.rows);
-
+    
     resizeScreen(nPixels.cols, nPixels.rows);
     setInterfaz(ctx, sizeP, dataMatriz);
+    
+    setBombs(dataMatriz, 10, {x:2, y:1});
 
     canvas.addEventListener('mousemove', (ev) => {
         setInterfaz(ctx, sizeP, dataMatriz);
-        mouseMovement(ctx, sizeP, colorPixel.hover, ev);
+        eventHover(ctx, sizeP, ev);
     });
 
     canvas.addEventListener('click', (ev)=>{
-        console.log(ev);
+        
     })
 }
 
@@ -58,6 +60,49 @@ const defineMatriz = (cols, rows) => {
     }
 
     return matriz;
+}
+
+
+/**
+ * Genera aleatoriamente el aglomerado de bombas que existiran en una matriz.
+ * @param { [ [] ] } matriz Matriz con los datos del tablero.
+ * @param { number } bombs bombas a colocar.
+ * @param { {x:int, y:int} } point Punto de referencia en donde NO deben existir bombas.
+ */
+const setBombs = (matriz, bombs, point) => {
+    const 
+        numRows = matriz.length, 
+        numCols = matriz[0].length,
+        probability = 1/10,
+        [px, py] = [point.x, point.y];
+    if( bombs > (numRows * numCols) - 9 ) throw new Error ('Demasiadas bombas para una cuadricula de '+numCols+'x'+numRows);
+
+    let x, y=0;
+    //Mientras todas las bombas no hayan sido colocadas:
+    while( bombs > 0 ){
+        x = 0;
+
+        //Recorra y mientras este sea menor al número de columnas, y las bombas no hayan sido dadas en su totalidad.
+        while( x < numCols && bombs > 0 ){
+            if( 
+                //Mientras la posición no esté dentro de un rango de 1 cuadrito a la redonda de point
+                //y el valor probabilistico sea el esperado, guarde la bomba, y eliminela de las necesarias.
+                !(
+                    Math.abs(px - x) <= 1 && 
+                    Math.abs(py - y) <= 1
+                ) &&
+                Math.random() <= probability
+            ){
+                matriz[y][x] = 'b';
+                bombs--;
+            }
+            x++;
+        }
+
+        
+        if( y+1 == numRows) y=0;
+        else y++
+    }
 }
 //--------------------------------;
 
