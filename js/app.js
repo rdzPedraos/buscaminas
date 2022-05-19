@@ -1,5 +1,5 @@
 import { setInterfaz, eventHover } from './layout.js';
-import {  } from './events.js';
+import { defineMatriz, setValuesInPosition, setBombs } from './logic.js';
 
 //define globals variables
 var sizeP,      //Tamaño de un pixel: {x:, y:}
@@ -7,8 +7,7 @@ var sizeP,      //Tamaño de un pixel: {x:, y:}
     canvas,     //Objeto html del Canvas.
     ctx,        //Contexto del canvas.
     dataMatriz,
-    start = false,
-    failed = false
+    game = {started: false, failed: false}
 //------------------------
 
 window.onload = () => {
@@ -23,22 +22,31 @@ window.onload = () => {
     resizeScreen(nPixels.cols, nPixels.rows);
     setInterfaz(ctx, sizeP, dataMatriz);
     
-    setBombs(dataMatriz, 10, {x:2, y:1});
-    searchFields(dataMatriz, {x:1, y:1});
+    
 
     canvas.addEventListener('mousemove', (ev) => {
         setInterfaz(ctx, sizeP, dataMatriz);
         eventHover(ctx, sizeP, ev);
     });
 
-    canvas.addEventListener('click', (ev)=>{
-        
+    canvas.addEventListener('click', (event)=>{
+        //Position in pixel:
+        const mousePosition = {
+            x: Math.floor( (event.clientX - ctx.canvas.offsetLeft) / sizeP.x),
+            y: Math.floor( (event.clientY - ctx.canvas.offsetTop) / sizeP.y)
+        }
+
+        if( !game.started ){
+            setBombs(dataMatriz, 10, mousePosition);
+            game.started = true;
+        } 
+        setValuesInPosition(dataMatriz, mousePosition);
+        setInterfaz(ctx, sizeP, dataMatriz);
     })
 }
 
 
-//------------ functions
-const resizeScreen = (cols, rows) => {
+export const resizeScreen = (cols, rows, ) => {
     const [width, height] = [
         sizeP.x * cols,
         sizeP.y * rows
@@ -49,115 +57,4 @@ const resizeScreen = (cols, rows) => {
 
     canvas.height = height;
     canvas.width = width;
-}
-
-const defineMatriz = (cols, rows) => {
-    const matriz = [];
-    for(let i=0; i < rows; i++){
-        matriz.push([]);
-        for(let j=0; j < cols; j++){
-            matriz[i].push(null);
-        }
-    }
-
-    return matriz;
-}
-
-const searchFields = (matriz, point) => {
-    const {x,y} = point;
-    const [minX, maxX, minY, maxY] = [
-        x > 0 ? x-1 : 0,
-        x >= matriz[0].length ? matriz[0].length : x+1,
-        y > 0 ? y-1 : 0,
-        y >= matriz.length ? matriz.length : y+1,
-    ];
-
-    console.log(point, minX, maxX, minY, maxY);
-    if( matriz[y,x] != 'b' ){
-        let bombs = 0;
-
-        //busque cuantas bombas hay al su alrededor.
-        for(let i = minY; i <= maxY; i++){
-            for(let j = minX; j <= maxX; j++){
-                if( matriz[i][j] == 'b' ) bombs++;
-            }
-        }
-
-        matriz[y,x] = bombs;
-        if(bombs == 0) {
-            for(let i = minY; i <= maxY; i++){
-                for(let j = minX; j <= maxX; j++){
-                    if( !(i==y && j==x) && matriz[i,j] == null){
-                        searchFields(matriz, {x:j, y:i});
-                    }
-                }
-            }
-        }
-    }
-}
-
-
-/**
- * Genera aleatoriamente el aglomerado de bombas que existiran en una matriz.
- * @param { [ [] ] } matriz Matriz con los datos del tablero.
- * @param { number } bombs bombas a colocar.
- * @param { {x:int, y:int} } point Punto de referencia en donde NO deben existir bombas.
- */
-const setBombs = (matriz, bombs, point) => {
-    const 
-        numRows = matriz.length, 
-        numCols = matriz[0].length,
-        probability = 1/10,
-        [px, py] = [point.x, point.y];
-    if( bombs > (numRows * numCols) - 9 ) throw new Error ('Demasiadas bombas para una cuadricula de '+numCols+'x'+numRows);
-
-    let x, y=0;
-    //Mientras todas las bombas no hayan sido colocadas:
-    while( bombs > 0 ){
-        x = 0;
-
-        //Recorra y mientras este sea menor al número de columnas, y las bombas no hayan sido dadas en su totalidad.
-        while( x < numCols && bombs > 0 ){
-            if( 
-                //Mientras la posición no esté dentro de un rango de 1 cuadrito a la redonda de point
-                //y el valor probabilistico sea el esperado, guarde la bomba, y eliminela de las necesarias.
-                !(
-                    Math.abs(px - x) <= 1 && 
-                    Math.abs(py - y) <= 1
-                ) &&
-                Math.random() <= probability
-            ){
-                matriz[y][x] = 'b';
-                bombs--;
-            }
-            x++;
-        }
-
-        
-        if( y+1 == numRows) y=0;
-        else y++
-    }
-}
-//--------------------------------;
-
-
-
-
-const debug = (dataMatriz) => {
-    dataMatriz[1][2] = 1;
-    dataMatriz[1][3] = 2;
-    dataMatriz[1][4] = 0;
-
-    dataMatriz[2][3] = 3;
-    dataMatriz[2][4] = 4;
-    dataMatriz[2][6] = 'b';
-    dataMatriz[2][7] = 'b';
-    dataMatriz[2][8] = 'f';
-    dataMatriz[2][9] = 5;
-
-    dataMatriz[3][6] = 'b';
-    dataMatriz[3][7] = 'b';
-
-    dataMatriz[4][6] = 'b';
-    dataMatriz[4][7] = 'b';
 }
