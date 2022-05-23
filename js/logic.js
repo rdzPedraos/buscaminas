@@ -1,5 +1,10 @@
-//
-export const defineMatriz = (cols, rows) => {
+/**
+ * Genera una matriz que contiene de tamaño [rows][cols]
+ * @param { int } rows Número de filas (cuadros en el eje y) que tendrá
+ * @param { int } cols Número de columnas (cuadros en el eje x) que tendrá
+ * @returns { null[][] } matriz vacia.
+ */
+export const defineMatriz = (rows, cols) => {
     const matriz = [];
     for(let i=0; i < rows; i++){
         matriz.push([]);
@@ -12,7 +17,13 @@ export const defineMatriz = (cols, rows) => {
 }
 
 
-//
+/**
+ * Función para el juego del buscaminas.
+ * Depende de lo que contenga en la matriz esa posición, procede a resolver sus posiciones
+ * aledañas.
+ * @param { int[][] } matriz 
+ * @param { { x: int, y: int} } point 
+ */
 export const setValuesInPosition = (matriz, point) => {
     const {x,y} = point;
     const [minX, maxX, minY, maxY] = [
@@ -22,13 +33,14 @@ export const setValuesInPosition = (matriz, point) => {
         y >= matriz.length-1 ? matriz.length-1 : y+1,
     ];
 
-    if( matriz[y,x] != 'b' ){
+    if( matriz[y][x] != 'b' ){
         let bombs = 0;
 
         //busque cuantas bombas hay al su alrededor.
         for(let i = minY; i <= maxY; i++){
             for(let j = minX; j <= maxX; j++){
-                if( matriz[i][j] == 'b' ) bombs++;
+                const val = matriz[i][j];
+                if( val == 'b' || val == 'fb' ) bombs++;
             }
         }
 
@@ -48,7 +60,7 @@ export const setValuesInPosition = (matriz, point) => {
 
 /**
  * Genera aleatoriamente el aglomerado de bombas que existiran en una matriz.
- * @param { [ [] ] } matriz Matriz con los datos del tablero.
+ * @param { string[][] } matriz Matriz con los datos del tablero.
  * @param { number } bombs bombas a colocar.
  * @param { {x:int, y:int} } point Punto de referencia en donde NO deben existir bombas.
  */
@@ -87,22 +99,11 @@ export const setBombs = (matriz, bombs, point) => {
     }
 }
 
-
-export const debug = (dataMatriz) => {
-    dataMatriz[1][2] = 1;
-    dataMatriz[1][3] = 2;
-    dataMatriz[1][4] = 0;
-
-    dataMatriz[2][3] = 3;
-    dataMatriz[2][4] = 4;
-    dataMatriz[2][6] = 'b';
-    dataMatriz[2][7] = 'b';
-    dataMatriz[2][8] = 'f';
-    dataMatriz[2][9] = 5;
-
-    dataMatriz[3][6] = 'b';
-    dataMatriz[3][7] = 'b';
-
-    dataMatriz[4][6] = 'b';
-    dataMatriz[4][7] = 'b';
+export const debug = (matriz) => {
+    for(let i=1; i < 4; i++){
+        for(let j=1; j<4; j++){
+            matriz[i][j] =  (i-1)*3 + (j-1);
+        }
+    }
+    matriz[4][1] = 6;
 }

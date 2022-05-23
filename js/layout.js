@@ -1,22 +1,57 @@
+//Colores usados en el juego:
 export const colors = {
-    default_pixels: ['#ccc', '#eee'],
+    default_pixels: ['#aaa', '#ccc'],
     
-    noOpen: '#aaee33bb',
-    open: '#ffc395e0', //ddc395e0
+    noOpen: '#ae3b',
+    open: '#ffba9588', //ddc395e0
     hover: '#fff4',
 
-    text: ['', '#5555ff', '#558855', 'red', 'brown', 'purple'],
+    text: ['', '#2a7bcc', '#388e3c', '#d32f2f', '#7b1fa2', '#fd9006', '#5af', 'black', 'black'],
     bombs: ['#db3236', '#008744', '#f4840d', '#ed44b5', '#48e6f1', '#f4c20d', '#b648f2', '#4885ed']
 }; 
 
 
-export function setInterfaz(ctx, szPixel, matriz){
-    createRejilla(ctx, szPixel);
-    setColorsByMatriz(ctx, szPixel, matriz);
+/**
+ * 
+ * @param {*} ctx 
+ * @param {*} sizePixel 
+ * @param {*} event 
+ */
+export function eventHover(ctx, sizePixel, event){
+    //Size pixel:
+    const [sizeX, sizeY] = [sizePixel.x, sizePixel.y];
+
+    //Position windows to canvas:
+    const pos = {
+        x: event.clientX - ctx.canvas.offsetLeft,
+        y: event.clientY - ctx.canvas.offsetTop
+    }
+
+    //Position in pixel:
+    const
+        mousePosX = Math.floor( pos.x / sizeX),
+        mousePosY = Math.floor( pos.y / sizeY);
+
+    //Set in the position the color:
+    ctx.fillStyle = colors.hover;
+    ctx.fillRect(mousePosX * sizeX, mousePosY * sizeY, sizeX, sizeY);    
 }
 
 
-export function createRejilla(ctx, szPixel){
+/**
+ * Setea la interfaz del contexto canvas.
+ * @param { Object } ctx Contexto canvas.
+ * @param { {x:int, y:int} } szPixel Tamaño de un pixel
+ * @param { string[][] } matriz Matriz que contiene información referente para imprimir.
+ * @param { boolean } showBombers Si es true, se imprimirán las bombas que tenga matriz.
+ */
+export function setInterfaz(ctx, szPixel, matriz, showBombers){
+    createRejilla(ctx, szPixel);
+    setColorsByMatriz(ctx, szPixel, matriz, showBombers);
+}
+
+
+function createRejilla(ctx, szPixel){
     const 
         colorBoxes = colors.default_pixels,
         nCols = Math.floor(ctx.canvas.width / szPixel.x),
@@ -42,7 +77,7 @@ export function createRejilla(ctx, szPixel){
  * @param {HTMLObjectElement} ctx Objeto canvas referido al html.
  * @param { {x:int, y:int} } szPixel Objeto con las medidas que tendrá un pixel en x y y.
  */
-export function setColorsByMatriz(ctx, szPixel, matriz){
+function setColorsByMatriz(ctx, szPixel, matriz, showBombers){
     //Tamaño de fuente que tendrá en mi canvas los números, relativo al tamaño del pixel:
     const fontSize = szPixel.y - szPixel.y*0.18;
     //Color del texto: [array con colores]
@@ -65,18 +100,22 @@ export function setColorsByMatriz(ctx, szPixel, matriz){
                 break;
 
                 case 'b':
-                    const valPosition = row*10 + col;
-                    ctx.fillStyle = colors.bombs[ Math.floor( valPosition % colors.bombs.length ) ];
-                    afterActions = () => {
-                        ctx.fillStyle = '#0005';
-
-                        const img = new Image();
-                        img.src = 'img/circle_alpha.png';
-                        ctx.drawImage(img, col*x + y/4, row*y + y/4, x/2, y/2);
+                    if( showBombers ){
+                        const valPosition = row*10 + col;
+                        ctx.fillStyle = colors.bombs[ Math.floor( valPosition % colors.bombs.length ) ];
+                        afterActions = () => {
+                            ctx.fillStyle = '#0005';
+    
+                            const img = new Image();
+                            img.src = 'img/circle_alpha.png';
+                            ctx.drawImage(img, col*x + y/4, row*y + y/4, x/2, y/2);
+                        }
                     }
+                    else ctx.fillStyle = colors.noOpen;
                 break;
 
                 case 'f':
+                case 'fb':
                     ctx.fillStyle = colors.noOpen;
 
                     afterActions = () => {
@@ -101,25 +140,4 @@ export function setColorsByMatriz(ctx, szPixel, matriz){
             afterActions();
         }
     }
-}
-
-
-export function eventHover(ctx, sizePixel, event){
-    //Size pixel:
-    const [sizeX, sizeY] = [sizePixel.x, sizePixel.y];
-
-    //Position windows to canvas:
-    const pos = {
-        x: event.clientX - ctx.canvas.offsetLeft,
-        y: event.clientY - ctx.canvas.offsetTop
-    }
-
-    //Position in pixel:
-    const
-        mousePosX = Math.floor( pos.x / sizeX),
-        mousePosY = Math.floor( pos.y / sizeY);
-
-    //Set in the position the color:
-    ctx.fillStyle = colors.hover;
-    ctx.fillRect(mousePosX * sizeX, mousePosY * sizeY, sizeX, sizeY);    
 }

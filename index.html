@@ -7,20 +7,40 @@
     <title>Buscaminas</title>
 
     <link rel="stylesheet" href="css/normalize.css">
+    <script src="https://kit.fontawesome.com/b3d35c6242.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
     <main>
         <section id="game">
             <div class="header">
-                <button>Difficult</button>
-
-                <div>
-                    <span>@</span>
-                    <span>Timer</span>
+                <div class="difficult-select">
+                    <select name="" id="difficult">
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                    <span class="difficult-arrow">
+                        <i class="fa-solid fa-caret-down"></i>
+                    </span>
                 </div>
 
-                <span>x</span>
+                <div class="data">
+                    <div>
+                        <img src="img/flag.png" alt="watch" height="40">
+                        <span>00</span>
+                    </div>
+
+                    <div>
+                        <img src="img/clock_icon.png" alt="watch" height="40">
+                        <span>00:00</span>
+                    </div>
+                </div>
+
+                <span class="btns">
+                    <i class="fa-solid fa-volume-high" style="margin-right:1em;"></i>
+                    <i class="fa-solid fa-x"></i>
+                </span>
             </div>
             
             <canvas id="canvas-game" width="500" height="400"></canvas>
