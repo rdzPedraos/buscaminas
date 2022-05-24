@@ -17,6 +17,7 @@ export const defineMatriz = (rows, cols) => {
 }
 
 
+
 /**
  * Función para el juego del buscaminas.
  * Depende de lo que contenga en la matriz esa posición, procede a resolver sus posiciones
@@ -58,6 +59,7 @@ export const setValuesInPosition = (matriz, point) => {
 }
 
 
+
 /**
  * Genera aleatoriamente el aglomerado de bombas que existiran en una matriz.
  * @param { string[][] } matriz Matriz con los datos del tablero.
@@ -97,6 +99,12 @@ export const setBombs = (matriz, bombs, point) => {
         if( y+1 == numRows) y=0;
         else y++;
     }
+}
+
+export const searchValInMatriz = (val, matriz) => {
+    let i=0, size = matriz.length;
+    while( i < size && !matriz[i].includes(val) ) i++;
+    return i < size;
 }
 
 export const debug = (matriz) => {

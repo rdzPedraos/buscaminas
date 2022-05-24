@@ -1,5 +1,5 @@
 import { setInterfaz, eventHover } from './layout.js';
-import { defineMatriz, setValuesInPosition, setBombs, debug } from './logic.js';
+import { defineMatriz, setValuesInPosition, setBombs, debug, searchValInMatriz } from './logic.js';
 
 //define globals variables
 const
@@ -50,9 +50,16 @@ const clickLeft = (event) => {
         }
     
         const value = dataMatriz[mousePosition.y][mousePosition.x]
-        if( value == 'b' ) game.failed = true;
-        else if( value != 'fb' && value != 'f') setValuesInPosition(dataMatriz, mousePosition);
-
+        if( value != 'fb' && value != 'f') setValuesInPosition(dataMatriz, mousePosition);
+        
+        if( value == 'b' ){
+            game.failed = true;
+            console.log('lose');
+        }
+        else if( !searchValInMatriz(null, dataMatriz) ){
+            console.log('win');
+        }
+        
         setInterfaz(ctx, sizeP, dataMatriz, game.failed);
     }
 }
@@ -62,7 +69,7 @@ const clickLeft = (event) => {
 const clickRight = (event) => {
     event.preventDefault();
 
-    if( !game.failed ){
+    if( !game.failed && game.start ){
         //Position in pixel:
         const pos = {
             x: Math.floor( (event.clientX - ctx.canvas.offsetLeft) / sizeP.x),
@@ -87,7 +94,7 @@ const clickRight = (event) => {
 //--- Others configs:
 /**
  * Setea dificultades e inciia un nuevo juego, con las variables globales.
- * @param { string } dificult 
+ * @param { string } dificult dificultad del juego = 'easy', 'medium', 'hard'
  */
  const setDificut = (dificult) => {
     let nPix = null;
