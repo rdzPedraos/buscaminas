@@ -12,10 +12,10 @@ export const colors = {
 
 
 /**
- * 
- * @param {*} ctx 
- * @param {*} sizePixel 
- * @param {*} event 
+ * Imprime un cuadrado (pixel) del tamaño que se proporcione en una rejilla que se crea a partir de la ubicación del mouse.
+ * @param { CanvasContext } ctx 
+ * @param { {x:int, y:int} } sizePixel Tamaño de un pixel en el canvas.
+ * @param { Event } event 
  */
 export function eventHover(ctx, sizePixel, event){
     //Size pixel:

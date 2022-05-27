@@ -1,7 +1,6 @@
-
-$fonts: 'arial';
-$bg-header: rgb(74, 117, 44);
-$text-color: white;
+@import 'variables';
+@import 'game';
+@import 'screens';
 
 *{
     font-family: $fonts;
@@ -11,78 +10,10 @@ $text-color: white;
     
         width: 100vw;
         min-height: 100vh;
-        background-color: rgb(32, 33, 36);
+        background-color: $bg-black;
     
         justify-content: center;
         align-items: center;
-    }
-    
-    #game{
-        .header{
-            display: flex;
-    
-            width: calc(100% - 2em);
-            padding: 1em;
-    
-            background-color: $bg-header;
-            color: $text-color;
-
-            align-items: center;
-            justify-content: space-between;
-
-            .data{
-                display: flex;
-                gap: 1em;
-                div{
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    font-size:1.3em;
-                }
-            }
-
-            .difficult-select{
-                position: relative;
-                $borderRad: .5em;
-
-                select{
-                    //box-shadow: 1px 2px 10px rgba(0,0,0,0.5em);
-                    border: 0;
-                    outline: none;
-
-                    padding: .5em 2.5em .5em .5em;
-                    border-radius: $borderRad;
-    
-                    font-weight: bold;
-                    font-size: 1em;
-                    appearance: none;
-
-                    cursor: pointer;
-                }
-
-                .difficult-arrow{
-                    display: flex;
-                    height:100%;
-                    width:1.8em;
-                    
-                    position: absolute;
-                    top:0;
-                    right:0;
-                    
-                    justify-content: center;
-                    align-items: center;
-
-                    border-radius: 0 $borderRad $borderRad 0;
-                    background-color: #eee;
-                    color:rgb(32, 33, 36);
-                    pointer-events: none;
-                }
-            }
-            
-            .btns{
-                cursor:pointer;
-            }
-        }
     }
 }
 

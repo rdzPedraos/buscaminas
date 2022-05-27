@@ -1,23 +1,4 @@
-* {
-  font-family: "arial";
-}
-
-* main {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100vw;
-  min-height: 100vh;
-  background-color: #202124;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-* #game .header {
+#game .header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -33,14 +14,14 @@
           justify-content: space-between;
 }
 
-* #game .header .data {
+#game .header .data {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   gap: 1em;
 }
 
-* #game .header .data div {
+#game .header .data div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -53,11 +34,11 @@
   font-size: 1.3em;
 }
 
-* #game .header .difficult-select {
+#game .header .difficult-select {
   position: relative;
 }
 
-* #game .header .difficult-select select {
+#game .header .difficult-select select {
   border: 0;
   outline: none;
   padding: .5em 2.5em .5em .5em;
@@ -70,7 +51,7 @@
   cursor: pointer;
 }
 
-* #game .header .difficult-select .difficult-arrow {
+#game .header .difficult-select .difficult-arrow {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -91,7 +72,93 @@
   pointer-events: none;
 }
 
-* #game .header .btns {
+#game .header .btns {
   cursor: pointer;
+}
+
+#screen {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #0009;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#screen div .img {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 350px;
+  height: 300px;
+  border-radius: .5em;
+  background-color: #4ac0fd;
+  background-image: var("../img/win_screen.png");
+  background-repeat: no-repeat;
+  background-size: 350px 150px;
+  background-position: bottom;
+  font-weight: bold;
+  color: white;
+  font-size: 2em;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#screen div .img img {
+  margin-top: 1em;
+}
+
+#screen div .btn {
+  width: 100%;
+  margin-top: .5em;
+  padding: .8em 1em;
+  border: 0;
+  border-radius: .5em;
+  font-size: 1.2em;
+  font-weight: bold;
+  background-color: #729339;
+  color: white;
+  cursor: pointer;
+  -webkit-transition: .1s;
+  transition: .1s;
+}
+
+#screen div .btn:hover {
+  background-color: #94c04a;
+  -webkit-transition: .1s;
+  transition: .1s;
+}
+
+* {
+  font-family: "arial";
+}
+
+* main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #202124;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 /*# sourceMappingURL=main.css.map */

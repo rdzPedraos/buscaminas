@@ -17,7 +17,7 @@
                 <div class="difficult-select">
                     <select name="" id="difficult">
                         <option value="easy">Easy</option>
-                        <option value="medium">Medium</option>
+                        <option value="medium" selected>Medium</option>
                         <option value="hard">Hard</option>
                     </select>
                     <span class="difficult-arrow">
@@ -28,12 +28,12 @@
                 <div class="data">
                     <div>
                         <img src="img/flag.png" alt="watch" height="40">
-                        <span>00</span>
+                        <span id="n-flags">00</span>
                     </div>
 
                     <div>
                         <img src="img/clock_icon.png" alt="watch" height="40">
-                        <span>00:00</span>
+                        <span id="timer">00:00</span>
                     </div>
                 </div>
 
@@ -46,6 +46,21 @@
             <canvas id="canvas-game" width="500" height="400"></canvas>
         </section>
     </main>
+
+
+
+    <div id="screen" style="display:none">
+        <div>
+            <div id="screen-img" class="img">
+                <img src="img/clock_icon.png" alt="watch" height="80">
+                <span id="screen-timer">00:00</span>
+            </div>
+            <button class="btn" id="btn-newGame">
+                <i id="screen-btn_icon" class="fa-solid fa-computer-mouse"></i>
+                <span id="screen-text">Volver a jugar</span>
+            </button>
+        </div>
+    </div>
 
     <script src="js/app.js" type="module"></script>
 </body>
