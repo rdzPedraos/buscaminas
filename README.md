@@ -1,4 +1,4 @@
-##Proyecto - Buscaminas con canvas
+## Proyecto - Buscaminas con canvas
 
 Todo el proyecto está realizado usando las propiedades de Canvas con JavaScript. Se realizó ingenieria inversa (se basó) en el juego del Buscaminas de Google. Este proyecto está aún en desarrollo, dentro de las funciones que hacen falta:
 
